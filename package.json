@@ -2,7 +2,7 @@
   "name": "RN-Trimmer",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/shubnagar29/RN-Trimmer",
+  "homepage": "https://github.com/panorbit/RN-Trimmer.git",
   "main": "src/index.tsx",
   "types": "lib/index.d.ts",
   "author": "Shubham Nagar <shubnagar29@gmail.com>",
