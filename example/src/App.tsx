@@ -65,6 +65,7 @@ const App = () => {
           duration={duration}
           onEndRelease={() => {}}
           onStartRelease={() => {}}
+          inactiveShadow={true}
           Content={() => (
             <View
               style={{
