@@ -32,6 +32,7 @@ export const RNTrimmer: React.FC<RNTrimmerProps> = ({
   trimmerHeight = 60,
   showTimeValue = true,
   timeTextStyle,
+  inactiveShadow = false,
 }) => {
   const startVal = useSharedValue(0)
   const endVal = useSharedValue(0)
@@ -106,7 +107,7 @@ export const RNTrimmer: React.FC<RNTrimmerProps> = ({
   })
 
   const defaultStyle: ViewStyle = {
-    height: 60,
+    height: trimmerHeight,
     borderRadius: 10,
     borderColor: 'black',
     borderWidth: 2,
@@ -120,6 +121,40 @@ export const RNTrimmer: React.FC<RNTrimmerProps> = ({
     width: 60,
     textAlign: 'center',
   }
+
+  const leftShadowStyle = useAnimatedStyle(() => {
+    return {
+      position: 'absolute',
+      zIndex: 10,
+      left: 5,
+      height: defaultStyle.height,
+      borderRadius: style ? style.borderRadius : defaultStyle.borderRadius,
+      width: interpolate(
+        startVal.value,
+        [0, maxVal],
+        [0, maxVal - (leftHandlerStyle.width || 25)],
+        Extrapolate.CLAMP
+      ),
+      backgroundColor: 'rgba(0,0,0,0.6)',
+    }
+  })
+
+  const rightShadowStyle = useAnimatedStyle(() => {
+    return {
+      position: 'absolute',
+      zIndex: 10,
+      right: 5,
+      height: defaultStyle.height,
+      borderRadius: style ? style.borderRadius : defaultStyle.borderRadius,
+      width: interpolate(
+        endVal.value,
+        [0, -maxVal],
+        [0, maxVal - (rightHandlerStyle.width || 25)],
+        Extrapolate.CLAMP
+      ),
+      backgroundColor: 'rgba(0,0,0,0.6)',
+    }
+  })
 
   return (
     <View
@@ -161,13 +196,19 @@ export const RNTrimmer: React.FC<RNTrimmerProps> = ({
         <PanGestureHandler onGestureEvent={handleGesture}>
           <Animated.View
             style={[
-              style ? { ...style, ...defaultStyle } : defaultStyle,
+              style ? { ...defaultStyle, ...style } : defaultStyle,
               animValStyle,
             ]}
           />
         </PanGestureHandler>
       ) : (
         <Animated.View style={animValStyle} />
+      )}
+      {inactiveShadow && (
+        <>
+          <Animated.View style={leftShadowStyle}></Animated.View>
+          <Animated.View style={rightShadowStyle}></Animated.View>
+        </>
       )}
       <RightTrimmer
         end={endVal}

@@ -43,4 +43,5 @@ export interface RNTrimmerProps {
   trimmerHeight?: number
   showTimeValue?: Boolean
   timeTextStyle?: TextStyle
+  inactiveShadow?: Boolean
 }

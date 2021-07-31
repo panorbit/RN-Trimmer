@@ -105,7 +105,18 @@ const LeftTrimmer: React.FC<TrimmerProps> = ({
     <PanGestureHandler onGestureEvent={handleGesture}>
       <Animated.View style={leftTrimStyle}>
         {icon && (
-          <View style={{ position: 'absolute', left: 0 }}>{icon()}</View>
+          <PanGestureHandler onGestureEvent={handleGesture}>
+            <Animated.View
+              style={{
+                position: 'absolute',
+                top: -30,
+                left: -10,
+                height: '100%',
+              }}
+            >
+              {icon()}
+            </Animated.View>
+          </PanGestureHandler>
         )}
         {showTimeValue && (
           <AnimatedText
